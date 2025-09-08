@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <conio.h>
 #include <fstream>
@@ -132,7 +132,7 @@ p:
         show_payment();
         break;
     case 12:
-        menu(); 
+        menu();
     default:
         cout << "VUI LONG NHAP LUA CHON HOP LE!";
     }
@@ -174,9 +174,8 @@ void bank::new_user() {
 p:
     system("cls");
     fstream file;
-    int p;
     float b;
-    string n, f, pa, a, ph, i;
+    string n, f, pa, p, a, ph, i;
     cout << "\n\n\t\t\tTHEM NGUOI DUNG MOI";
     cout << "\n\n Ma tai khoan: ";
     cin >> id;
@@ -186,6 +185,8 @@ p:
     cin >> fname;
     cout << "\n\n Dia chi: ";
     cin >> address;
+    cin.ignore();
+    getline(cin, address);
     cout << "\n\n Ma PIN (5 so): ";
     cin >> pin;
     cout << "\n\n Mat khau: ";
@@ -237,8 +238,6 @@ void bank::already_user() {
         file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
         while (!file.eof()) {
             if (t_id == id) {
-                system("cls");
-                cout << "\n\n\t\t\t Tai khoan da ton tai!";
                 cout << "\n\n Ma ID: " << id << " Ma Pin: " << pin << " Mat khau: " << pass;
                 found++;
                 break;
@@ -387,7 +386,7 @@ void bank::deposit() {
     system("cls");
     cout << "\n\n\t\t\tNAP TIEN";
     file.open("bank.txt", ios::in);
-    file1.open("bank1.txt", ios::out); 
+    file1.open("bank1.txt", ios::out);
     if (!file) {
         cout << "Loi khi mo file!";
     }
@@ -405,7 +404,7 @@ void bank::deposit() {
                 found++;
             }
             file1 << " " << id << " " << name << " " << fname << " " << address
-                  << " " << pin << " " << pass << " " << phone << " " << balance << endl;
+                << " " << pin << " " << pass << " " << phone << " " << balance << endl;
 
             file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
         }
@@ -552,6 +551,8 @@ void bank::edit() {
                 cin >> fname;
                 cout << "\n\n Dia chi moi: ";
                 cin >> address;
+                cin.ignore();
+                getline(cin, address);
                 cout << "\n\n Ma PIN (5 so) moi: ";
                 cin >> pin;
                 cout << "\n\n Mat khau moi: ";
@@ -685,7 +686,7 @@ void bank::show_payment() {
     cout << "\n-------------------------------------------------------------";
 
     while (file >> acc_id >> trans_type >> amount) {
-        getline(file, date_time); 
+        getline(file, date_time);
 
         if (t_id == acc_id) {
             cout << "\n" << acc_id << "\t" << trans_type << "\t\t"
@@ -744,7 +745,7 @@ void bank::user_balance() {
             cout << "\nSo du hien tai cua ban la: " << balance << " VND";
             cout << "\n-------------------------------------------\n";
             found = true;
-            break; 
+            break;
         }
     }
 
@@ -764,7 +765,7 @@ void bank::withdraw_atm() {
     system("cls");
     cout << "\n\n\t\t\tRUT TIEN";
     file.open("bank.txt", ios::in);
-    file1.open("bank1.txt", ios::out); 
+    file1.open("bank1.txt", ios::out);
     if (!file) {
         cout << "\n\nLoi khi mo file!";
     }
@@ -772,7 +773,6 @@ void bank::withdraw_atm() {
         cout << "\n\nNhap ma tai khoan: ";
         cin >> t_id;
         cout << "\nNhap ma PIN (5 so): ";
-        t_pin.clear();
         for (int i = 0; i < 5; i++) {
             ch = _getch();
             t_pin += ch;
@@ -836,7 +836,6 @@ void bank::check_detail() {
         cout << "\n\nNhap ma tai khoan: ";
         cin >> t_id;
         cout << "\nNhap ma PIN (5 so): ";
-        t_pin.clear();
         for (int i = 0; i < 5; i++) {
             ch = _getch();
             t_pin += ch;
